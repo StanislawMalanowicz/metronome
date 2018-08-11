@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>CodersLab</title>
+  
+</head>
+<body>
+        
+  <h1>Hello Metronome</h1>
+  <div class="counter">0</div>
+  <button class="reset">reset</button>
+  <p id="minus">-</p><p id="plus">+</p>
+  <div class="slidecontainer">
+    <input type="range" min="30" max="450" value="150" class="slider" id="myRange">
+    
+  </div>
+
+  <input class="bpmScreen" value="150" type="number" onchange="limiter(this)">BPM</input>
+  <div class="playStop">
+    <button class="play"></button>
+    <button class="stop"></button>
+  </div>
+  
+  <div class="light"></div>
+
+  <p>Volume:</p><input class="volumeSlider" value="50" type="Range" min="0" max="100">
+  <button class="mute">mute</button>
+  <h2>Sounds:</h2>
+  <select class="soundChange">
+    <option value="click">Click</option>
+    <option value="hihat">Hi-Hat</option>   
+    <option value="kick">Kick</option>   
+    <option value="clap">Clap</option>   
+    <option value="beep">Beep</option>   
+  </select>
+ <!-- <button class="soundTest">test</button> -->
+ <h2>Accents:</h2>
+<select class="metrum">
+  <option value="1/4">1/4</option>
+  <option value="2/4">2/4</option>
+  <option value="3/4">3/4</option>
+  <option value="4/4">4/4</option>
+</select>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="https://code.createjs.com/soundjs-0.6.2.min.js"></script>
+  <script src="js/out.js"></script>
+</body>
+</html>
