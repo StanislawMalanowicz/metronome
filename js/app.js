@@ -8,7 +8,8 @@ var screen = $(".bpmScreen")
 var volumeSlider = document.querySelector(".volumeSlider")
 var counterVal = $('.counter').text() 
 
-var soundID = "click";
+var currentSoundId = "click";
+var currentMetrumValue = "1/4";
 var hiHat = "hihat"
 let playedSong = null;
 var mute = $(".mute");
@@ -22,23 +23,12 @@ const minus = $("#minus")
 
 var metrum = $(".metrum")
 
-function loadClickSound () {   
-    createjs.Sound.registerSound("audio/click2.wav", soundID)
-  }
-loadClickSound()
+createjs.Sound.registerSound("audio/click2.wav", "click");
+createjs.Sound.registerSound("audio/hihat.wav", "hihat");
+createjs.Sound.registerSound("audio/kick.wav", "kick");
+createjs.Sound.registerSound("audio/clap.wav", "clap");
+createjs.Sound.registerSound("audio/beep.wav", "beep");
 
-function loadHihatSound(){
-    createjs.Sound.registerSound("audio/hihat.wav", soundID);
-}
-function loadKickSound(){
-    createjs.Sound.registerSound("audio/kick.wav", soundID)
-}
-function loadClapSound(){
-    createjs.Sound.registerSound("audio/clap.wav", soundID)
-}
-function loadBeepSound(){
-    createjs.Sound.registerSound("audio/beep.wav", soundID)
-}
 const light = $(".light");
 
 //speed slider:
@@ -59,7 +49,7 @@ speedoMeter.on("change", function(){
             playedSong.volume = currentVolume;
             // soundID.volume=0.2;
             light.toggleClass('blue');
-            count ++
+            count++
             $('.counter').text(count)
         }, tempo) 
     }
@@ -82,21 +72,32 @@ start.on("click", () => {
     var tempo = 1000 * 60 / val
     console.log("fromstart " + metrum)
     letsPlay = setInterval(() => {
-        count++
-        $('.counter').text(count)
-        playedSong = createjs.Sound.play(soundID);
-        playedSong.volume = currentVolume;       
-        light.toggleClass('blue');   
-        console.log(metrum)
-        if(value === "1/4"){
-            accentsFour()
+        count++;
+        $('.counter').text(count);
+
+        if (currentMetrumValue === '2/4' && count % 2 === 0) {
+            playedSong = createjs.Sound.play('beep');
+            playedSong.volume = currentVolume;  
+            light.toggleClass('blue');
+            return;
         }
-        metrum.on('change', function(){
-            console.log(this.value)
-            if(this.value === "4/4"){
-                accentsFour()
-            }
-        })
+        else if  (currentMetrumValue === '3/4' && count % 3 === 0) {
+            playedSong = createjs.Sound.play('beep');
+            playedSong.volume = currentVolume;  
+            light.toggleClass('blue');
+            return;
+        }
+        else if  (currentMetrumValue === '4/4' && count % 4 === 0) {
+            playedSong = createjs.Sound.play('beep');
+            playedSong.volume = currentVolume;  
+            light.toggleClass('blue');
+            return;
+        }
+
+        playedSong = createjs.Sound.play(currentSoundId);
+        playedSong.volume = currentVolume;       
+        light.toggleClass('blue');
+    
     }, tempo)
     
     shouldPlay = true;
@@ -152,7 +153,7 @@ function speedRefresh(){
         // soundID.volume=0.2;
         light.toggleClass('blue');
        
-        count ++
+        count++
         $('.counter').text(count)
         }, tempo) 
     }
@@ -171,13 +172,11 @@ mute.on("click", function(){
 
 //sound changing:
 soundChange.on("change", function (){
-    console.log(this.value)
-    if(this.value === "hihat"){ loadHihatSound()
-    }else if(this.value === "click"){ loadClickSound()}
-    else if(this.value === "kick"){ loadKickSound()}
-    else if(this.value === "clap"){ loadClapSound()}
-    else if(this.value === "beep"){ loadBeepSound()}
-   
+    currentSoundId = this.value;
+});
+
+metrum.on('change', function() {
+    currentMetrumValue = this.value;
 })
 
 //counter & reset:
@@ -198,13 +197,3 @@ function accentsFour(){
     }
     
 }
-// metrum.on('change', function(){
-//     console.log(this.value)
-    
-// })
-//p5.js fun:
-// document.querySelector(".soundTest").addEventListener("click", function(){
-//     console.log("bedzie dobrze ;)")
-//     createSlider(0, 1, 0.5, 0.01)
-// })
-
