@@ -5,7 +5,7 @@ var speedoMeter = $(".slider")
 var count = 0
 
 var screen = $(".bpmScreen")
-var volumeSlider = document.querySelector(".volumeSlider")
+var volumeSlider = $(".volumeSlider");
 var counterVal = $('.counter').text() 
 
 var currentSoundId = "click";
@@ -16,7 +16,7 @@ var mute = $(".mute");
 
 var shouldPlay = false;
 var soundChange = $(".soundChange")
-var currentVolume = 1;
+var currentVolume = .5;
 
 const plus = $("#plus")
 const minus = $("#minus")
@@ -33,28 +33,16 @@ const light = $(".light");
 
 //speed slider:
 speedoMeter.on("change", function(){
- 
     screen.val(speedoMeter.val())
-    clearInterval(letsPlay)
     
     var val = screen.val()
-    var tempo = 1000 * 60 / val
+    var tempo = 1000 * 60 / val;
    
-    //zabezpieczenie
-    if (shouldPlay === true) {
-        letsPlay = setInterval(() => {
-                        
-            // console.log(this)         
-            playedSong = createjs.Sound.play(soundID);
-            playedSong.volume = currentVolume;
-            // soundID.volume=0.2;
-            light.toggleClass('blue');
-            count++
-            $('.counter').text(count)
-        }, tempo) 
+    if (shouldPlay) {
+        playSound(tempo);
     }
-    
-})
+});
+
 //limiter
 const limiter = input => {
     if (input.value < 30) input.value = 30;
@@ -69,12 +57,84 @@ start.on("click", () => {
     stop.css("display", "inline");
     start.css("display", "none")
     
-    var tempo = 1000 * 60 / val
-    console.log("fromstart " + metrum)
+    var tempo = 1000 * 60 / val;
+    playSound(tempo);
+    
+    shouldPlay = true;
+})
+
+stop.on("click", () => {
+    clearInterval(letsPlay)
+    stop.css("display", "none");
+    start.css("display", "inline")
+    shouldPlay = false;
+})
+
+//speed plus&minus:
+plus.on("click", () => {
+    var num = +$(".bpmScreen").val() + 21;
+    if(num > 450) {
+        num = 450
+    }
+
+    $(".bpmScreen").val(num)
+    $("#myRange").val(num);
+    var tempo = 1000 * 60 / num;
+    
+    if (shouldPlay) {
+        playSound(tempo);
+    }
+});
+
+minus.on("click", () => {
+    var num = +$(".bpmScreen").val() - 21;
+    if(num < 30){
+        num = 30;
+    }
+    $(".bpmScreen").val(num)
+    $("#myRange").val(num);
+
+    var tempo = 1000 * 60 / num;
+    if (shouldPlay) {
+        playSound(tempo);
+    }
+});
+
+// volume:
+volumeSlider.on("mousemove",function (){
+    currentVolume = this.value / 100;
+    // console.log(this.value)
+})
+//mute:
+mute.on("click", function(){
+    console.log(mute);
+    currentVolume = 0;
+    volumeSlider.val(currentVolume)
+})
+
+//sound changing:
+soundChange.on("change", function (){
+    currentSoundId = this.value;
+});
+
+metrum.on('change', function() {
+    currentMetrumValue = this.value;
+})
+
+//counter & reset:
+$(".reset").on('click', ()=>{
+    $(".counter").text(0)
+    count=0;
+})
+
+//  accents:
+function playSound(tempo) {
+    clearInterval(letsPlay);
+    shouldPlay = true;
     letsPlay = setInterval(() => {
         count++;
         $('.counter').text(count);
-
+        
         if (currentMetrumValue === '2/4' && count % 2 === 0) {
             playedSong = createjs.Sound.play('beep');
             playedSong.volume = currentVolume;  
@@ -97,103 +157,5 @@ start.on("click", () => {
         playedSong = createjs.Sound.play(currentSoundId);
         playedSong.volume = currentVolume;       
         light.toggleClass('blue');
-    
-    }, tempo)
-    
-    shouldPlay = true;
-
-})
-stop.on("click", () => {
-    clearInterval(letsPlay)
-    stop.css("display", "none");
-    start.css("display", "inline")
-    shouldPlay = false;
-       
-})
-
-//speed plus&minus:
-plus.on("click", ()=>{  
-    speedRefresh()
-    playedSong.volume = currentVolume;
-    console.log(volumeSlider.value)
-    // console.log("plus: " +  screen.val())
-   var num = +$(".bpmScreen").val() +21;
-   $(".bpmScreen").val(num)
-   var num = +$("#myRange").val() +21;
-   $("#myRange").val(num)
-
-})
-
-minus.on("click", ()=>{
-    // console.log("minus")
-    var num = +$(".bpmScreen").val() -21;
-    $(".bpmScreen").val(num)
-    var num = +$("#myRange").val() -21;
-   $("#myRange").val(num)
-   speedRefresh()
-})
-
-function speedRefresh(){
-    
-    screen.val(speedoMeter.val())
-    
-    clearInterval(letsPlay)
-
-    var val = screen.val()
-    var tempo = 1000 * 60 / val
-
-    //zabezpieczenie
-    if (shouldPlay === true) {
-        letsPlay = setInterval(() => {
-
-        // console.log(this)
-        createjs.Sound.play(soundID);
-        playedSong.volume = currentVolume;
-
-        // soundID.volume=0.2;
-        light.toggleClass('blue');
-       
-        count++
-        $('.counter').text(count)
-        }, tempo) 
-    }
-}
-// volume:
-volumeSlider.addEventListener("mousemove",function (){
-    currentVolume = this.value / 100;
-    // console.log(this.value)
-})
-//mute:
-mute.on("click", function(){
-    console.log(mute);
-    currentVolume = 0;
-    volumeSlider.value = currentVolume;
-})
-
-//sound changing:
-soundChange.on("change", function (){
-    currentSoundId = this.value;
-});
-
-metrum.on('change', function() {
-    currentMetrumValue = this.value;
-})
-
-//counter & reset:
-$(".reset").on('click', ()=>{
-    $(".counter").text(0)
-    count=0;
-})
-
-//accents:
-function accentsFour(){
-    if(count % 4 === 0){
-        // alert("dziala")
-        console.log(count % 4)
-        loadBeepSound()
-       
-    }else{
-        loadClickSound()
-    }
-    
+    }, tempo);
 }

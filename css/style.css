@@ -1,5 +1,6 @@
 h1{
     color: aqua;
+    
 }
 .playStop{
     margin-left: 220px;
@@ -116,6 +117,7 @@ p{
 }
 .volumeSlider::-webkit-slider-thumb{
     cursor: pointer;
+    background-color: #2bd434
 }
 .metronome{
     position: relative;
