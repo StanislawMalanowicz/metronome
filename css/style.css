@@ -3,9 +3,14 @@ h1{
     
 }
 .playStop{
-    margin-left: 220px;
     position: relative;
-    bottom: 39px;
+    left: 85px;
+    bottom: 110px;;
+}
+.countSection{
+    position: relative;
+    top: -42px;
+    left: 55px;
 }
 .counter{
     width: 50px;
@@ -20,8 +25,76 @@ h1{
     /* float: right; */
     position: relative;
     color: #2bd434;
-    right: -59px;
-    bottom: 52px;
+    right: -4px;
+    bottom: 0px;
+}
+.speedSection{
+    /* border: #2bd434 1px solid; */
+    position: relative;
+    top: -20px;
+}
+.tempoSlider{
+    position: relative;
+    bottom: 25px;
+}
+p{
+    font-size: 50px;
+    /* display: inline; */
+    /* cursor: pointer; */
+}
+#minus{
+    display: inline;
+    cursor: pointer;
+}
+#myRange{
+    display: inline;
+    position: relative;
+    bottom: 36px;
+    left: 24px;
+}
+#plus{
+    display: inline;
+    position: relative;
+    left: 147px;
+    cursor: pointer;
+    bottom: -5px;
+}
+.bpmScreen{
+    position: relative;
+    bottom: 73px
+}
+#bpm{
+    position: relative;
+    bottom: 71px;
+    left: 2px;
+}
+.volumeSection{
+    position: relative;
+    bottom: 50px;
+}
+.volumeSlider{
+    display: inline;
+    position: relative;
+    bottom: 44px;
+    left: 92px;
+}
+.volumeSlider::-webkit-slider-thumb{
+    cursor: pointer;
+    background-color: #2bd434
+}
+.mute{
+    position: relative;
+    bottom: 24px;
+}
+.accentSection{
+    display: inline;
+    position: relative;
+    left: 117px;
+    bottom: 85px;
+}
+.functions{
+    position: relative;
+    bottom: 60px;
 }
 .stop{
     display: none;
@@ -100,26 +173,12 @@ h1{
     background: blue;
     border-radius: 20px; 
     position: relative;
-    left: 100px;
+    left: 108px;
 }
-p{
-    font-size: 50px;
-    display: inline;
-    /* cursor: pointer; */
-}
-#plus{
-    position: relative;
-    left: 150px;
-    cursor: pointer;
-}
-#minus{
-    cursor: pointer;
-}
-.volumeSlider::-webkit-slider-thumb{
-    cursor: pointer;
-    background-color: #2bd434
-}
+
+
 .metronome{
     position: relative;
     width: 500px;
+    left: 40%;
 }

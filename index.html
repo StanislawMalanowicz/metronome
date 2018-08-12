@@ -9,39 +9,56 @@
 <body>
 <section class="metronome">      
   <h1>Hello Metronome</h1>
-  <div class="counter">0</div>
-  <button class="reset">reset</button>
-  <p id="minus">-</p><p id="plus">+</p>
-  <div class="slidecontainer">
-    <input type="range" min="30" max="450" value="150" class="slider" id="myRange">
-    
-  </div>
-
-  <input class="bpmScreen" value="150" max="450" type="number" onchange="limiter(this)">BPM</input>
-  <div class="playStop">
-    <button class="play"></button>
-    <button class="stop"></button>
+  <div class="light"></div>
+  <div class="countSection">
+    <div class="counter">0</div>
+    <button class="reset">reset</button>
   </div>
   
-  <div class="light"></div>
+  <div class="speedSection">
+    <h2>Tempo:</h2>
+    <div class="tempoSlider">
+        <p id="minus">-</p><p id="plus">+</p>
+        <div class="slidecontainer">
+        <input type="range" min="30" max="450" value="150" class="slider" id="myRange">
+        
+      </div>
+    </div>
+   
+  </div>
+  
 
-  <p>Volume:</p><input class="volumeSlider" value="50" type="Range" min="0" max="100">
+  <input class="bpmScreen" value="150" max="450" type="number" onchange="limiter(this)"></input><span id="bpm">bpm</span>
+ 
+  
+<div class="volumeSection">
+  <h2>Volume:</h2><input class="volumeSlider" value="50" type="Range" min="0" max="100">
   <button class="mute">mute</button>
-  <h2>Sounds:</h2>
-  <select class="soundChange">
-    <option value="click">Click</option>
-    <option value="hihat">Hi-Hat</option>   
-    <option value="kick">Kick</option>   
-    <option value="clap">Clap</option>    
-  </select>
- <!-- <button class="soundTest">test</button> -->
- <h2>Accents:</h2>
-<select class="metrum">
-  <option value="1/4">1/4</option>
-  <option value="2/4">2/4</option>
-  <option value="3/4">3/4</option>
-  <option value="4/4">4/4</option>
-</select>
+</div>
+  <div class="functions">
+      <h2>Sounds:</h2>
+      <select class="soundChange">
+        <option value="click">Click</option>
+        <option value="hihat">Hi-Hat</option>   
+        <option value="kick">Kick</option>   
+        <option value="clap">Clap</option>    
+      </select>
+     <div class="accentSection">
+      <h2>Accents:</h2>
+      <select class="metrum">
+        <option value="1/4">1/4</option>
+        <option value="2/4">2/4</option>
+        <option value="3/4">3/4</option>
+        <option value="4/4">4/4</option>
+      </select>
+     </div>
+  </div>
+  
+ 
+<div class="playStop">
+  <button class="play"></button>
+  <button class="stop"></button>
+</div>
 </section>  
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="https://code.createjs.com/soundjs-0.6.2.min.js"></script>
